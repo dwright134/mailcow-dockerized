@@ -1947,6 +1947,21 @@ jQuery(function($){
           defaultContent: ''
         },
         {
+          title: lang.policy_rule,
+          data: 'policy_rule',
+          defaultContent: 'Policy Rule'
+        },
+        {
+          title: lang.moderators,
+          data: 'moderators',
+          defaultContent: 'Moderators'
+        },
+        {
+          title: lang.policy_active,
+          data: 'policy_active',
+          defaultContent: 'Policy Active'
+        },
+        {
           title: lang.active,
           data: 'active',
           defaultContent: '',

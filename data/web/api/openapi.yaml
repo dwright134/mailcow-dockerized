@@ -129,6 +129,15 @@ paths:
                 sogo_visible:
                   description: toggle visibility as selectable sender in SOGo
                   type: boolean
+                policy_rule:
+                  description: policy rule to apply to alias address. Options are domain, moderators, members, members_and_moderators.
+                  type: string
+                moderators:
+                  description: Moderators have access to send emails to alias when the proper mode is set. It is a list of email addreses, comma seperated.
+                  type: string
+                policy_active:
+                  description: is the alias policy rule active or not
+                  type: boolean
               type: object
       summary: Create alias
   /api/v1/add/time_limited_alias:
@@ -2943,6 +2952,9 @@ paths:
                             - "6"
                           private_comment: private comment
                           public_comment: public comment
+                          policy_rule: policy_rule
+                          moderators: moderator@domain.ltd
+                          policy_active: "0"
                         - null
                       msg:
                         - alias_modified
@@ -3011,6 +3023,15 @@ paths:
                       type: string
                     sogo_visible:
                       description: toggle visibility as selectable sender in SOGo
+                      type: boolean
+                    policy_rule:
+                      description: policy rule to apply to alias address. Options are domain, moderators, members, members_and_moderators.
+                      type: string
+                    moderators:
+                      description: Moderators have access to send emails to alias when the proper mode is set. It is a list of email addreses, comma seperated.
+                      type: string
+                    policy_active:
+                      description: is the alias policy rule active or not
                       type: boolean
                   type: object
                 items:

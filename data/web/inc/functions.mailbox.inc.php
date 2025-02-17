@@ -684,8 +684,11 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
         case 'alias':
           $addresses  = array_map('trim', preg_split( "/( |,|;|\n)/", $_data['address']));
           $gotos      = array_map('trim', preg_split( "/( |,|;|\n)/", $_data['goto']));
+          $moderators = array_map('trim', preg_split( "/( |,|;|\n)/", $_data['moderators']));
           $active = intval($_data['active']);
           $sogo_visible = intval($_data['sogo_visible']);
+          $policy_active = intval($_data['policy_active']);
+          $policy_rule = $_data['policy_rule'];
           $goto_null = intval($_data['goto_null']);
           $goto_spam = intval($_data['goto_spam']);
           $goto_ham = intval($_data['goto_ham']);
@@ -840,8 +843,8 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
               );
               continue;
             }
-            $stmt = $pdo->prepare("INSERT INTO `alias` (`address`, `public_comment`, `private_comment`, `goto`, `domain`, `sogo_visible`, `active`)
-              VALUES (:address, :public_comment, :private_comment, :goto, :domain, :sogo_visible, :active)");
+            $stmt = $pdo->prepare("INSERT INTO `alias` (`address`, `public_comment`, `private_comment`, `goto`, `domain`, `sogo_visible`, `policy_rule`, `moderators`, `policy_active`, `active`)
+              VALUES (:address, :public_comment, :private_comment, :goto, :domain, :sogo_visible, :policy_rule, :moderators, :policy_active, :active)");
             if (!filter_var($address, FILTER_VALIDATE_EMAIL) === true) {
               $stmt->execute(array(
                 ':address' => '@'.$domain,
@@ -851,6 +854,9 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
                 ':goto' => $goto,
                 ':domain' => $domain,
                 ':sogo_visible' => $sogo_visible,
+                ':policy_rule' => $policy_rule,
+                ':moderators' => $moderators,
+                ':policy_active' => $policy_active,
                 ':active' => $active
               ));
             }
@@ -862,6 +868,9 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
                 ':goto' => $goto,
                 ':domain' => $domain,
                 ':sogo_visible' => $sogo_visible,
+                ':policy_rule' => $policy_rule,
+                ':moderators' => $moderators,
+                ':policy_active' => $policy_active,
                 ':active' => $active
               ));
             }
@@ -2336,6 +2345,10 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
               $goto_ham = (isset($_data['goto_ham'])) ? intval($_data['goto_ham']) : 0;
               $public_comment = (isset($_data['public_comment'])) ? $_data['public_comment'] : $is_now['public_comment'];
               $private_comment = (isset($_data['private_comment'])) ? $_data['private_comment'] : $is_now['private_comment'];
+              $policy_rule = (isset($_data['policy_rule'])) ? $_data['policy_rule'] : $is_now['policy_rule'];
+              $moderators =  (isset($_data['moderators'])) ? $_data['moderators'] : $is_now['moderators'];
+              $policy_rule = (isset($_data['policy_rule'])) ? $_data['policy_rule'] : $is_now['policy_rule'];
+              $policy_active = (isset($_data['policy_active'])) ? intval($_data['policy_active']) : $is_now['policy_active'];
               $goto = (!empty($_data['goto'])) ? $_data['goto'] : $is_now['goto'];
               $address = (!empty($_data['address'])) ? $_data['address'] : $is_now['address'];
             }
@@ -2514,6 +2527,9 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
                 `domain` = :domain,
                 `goto` = :goto,
                 `sogo_visible`= :sogo_visible,
+                `policy_rule` = :policy_rule,
+                `moderators` => :moderators,
+                `policy_active` => :policy_active,
                 `active`= :active
                   WHERE `id` = :id");
               $stmt->execute(array(
@@ -2523,6 +2539,9 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
                 ':domain' => $domain,
                 ':goto' => $goto,
                 ':sogo_visible' => $sogo_visible,
+                ':policy_rule' => $policy_rule,
+                ':moderators' => $moderators,
+                ':policy_active' => $policy_active,
                 ':active' => $active,
                 ':id' => $is_now['id']
               ));
@@ -4330,6 +4349,9 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
             `private_comment`,
             `active`,
             `sogo_visible`,
+            `policy_rule`,
+            `moderators`,
+            `policy_active`
             `created`,
             `modified`
               FROM `alias`
