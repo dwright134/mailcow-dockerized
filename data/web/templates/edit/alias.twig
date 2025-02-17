@@ -40,7 +40,7 @@
   </div>
   <hr>
   <div class="row mb-4">
-    <label class="control-label col-sm-2" for="goto">{{ lang.edit.target_address|raw }}</label>
+    <label class="control-label col-sm-2" for="policy_rule">{{ lang.edit.policy_rule }}</label>
     <div class="col-sm-10">
       <select name="policy" class="form-control">
         <option value="domain"{% if result.private_comment == 'domain' %} selected{% endif %}>Domain</option>
@@ -59,7 +59,7 @@
   <div class="row mb-2">
     <div class="offset-sm-2 col-sm-10">
       <div class="form-check">
-        <label><input type="checkbox" class="form-check-input" value="1" name="islist"{% if result.islist == '1' %} checked{% endif %}>Mailing List</label>
+        <label><input type="checkbox" class="form-check-input" value="1" name="islist"{% if result.islist == '1' %} checked{% endif %}>Policy Active</label>
       </div>
     </div>
   </div>
