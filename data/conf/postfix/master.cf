@@ -119,6 +119,10 @@ smtp_sender_cleanup unix n - y - 0 cleanup
 127.0.0.1:10027 inet n n n - 0 spawn user=nobody argv=/usr/local/bin/whitelist_forwardinghosts.sh
 # end whitelist_fwd
 
+# start policyserver
+127.0.0.1:10777 inet n n n - 0 spawn user=nobody argv=/usr/local/bin/policyserver.rb
+# end policyserver
+
 # start watchdog-specific
 # logs to local7 (hidden)
 589 inet n      -       n       -       -       smtpd
