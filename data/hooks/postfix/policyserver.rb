@@ -41,24 +41,24 @@ class AliasPolicyServer
 
   def alias_policy(session_attributes)
     query = <<~SQL
-      SELECT a.address, a.goto, a.policy_rule, a.policy_moderators
+      SELECT a.address, a.goto, a.policy_rule AS policy, a.policy_moderators AS moderators
       FROM alias a
       INNER JOIN domain d ON a.domain = d.domain AND d.active = 1
-      WHERE a.active = 1 AND islist = 1 AND address = ? LIMIT 1
+      WHERE a.active = 1 AND policy_active = 1 AND address = ? LIMIT 1
     SQL
     results = db_fetch(query, [session_attributes['recipient']])
     return "DUNNO No alias record for #{session_attributes['recipient']} found." if results.empty?
 
-    @policy = results[0]['policy_rule'].downcase
+    @policy = results[0]['policy'].downcase
     sender = session_attributes['sender']
     sender_domain = sender.split('@').last
     recipient = session_attributes['recipient']
     recipient_domain = recipient.split('@').last
-    goto = results[0]['goto'].split(',')
-    moderators = results[0]['policy_moderators'].split(',').map(&:strip)
+    goto = results[0]['goto']&.split(',') || []
+    moderators = results[0]['moderators']&.split(',')&.map(&:strip) || []
 
     case @policy
-      when 'public' "OK" 
+      when 'no_reply' "REJECT,INFO"
       when 'domain' then sender_domain == recipient_domain ? "OK" : "REJECT"
       when 'members_only' then goto.include?(sender) ? "OK" : "REJECT"
       when 'moderators_only' then moderators.include?(sender) ? "OK" : "REJECT"
@@ -76,9 +76,9 @@ class AliasPolicyServer
       session_attributes[key] = value.downcase if ALIAS_POLICY_ATTRIBUTES.include?(key) && !value.empty?
       break if line.empty?
     end
-    action = session_attributes['sender'] == 'watchdog@invalid' ? "OK,INFO Watchdog always allowed" : alias_policy(session_attributes)
-    time_spent = format("[%.4fs]", Time.now - session_attributes['start_time'])
-    @log.info("Alias access policy decision #{action}: #{policy.split('_').collect(&:capitalize).join(" ")} - #{session_attributes['protocol_state']} #{session_attributes['sender']} -> #{session_attributes['recipient']} time: #{time_spent}.")
+    action = session_attributes['sender'] == 'watchdog@invalid' ? "OK #{session_attributes['sender']} gets a pass." : alias_policy(session_attributes)
+    time_spent = format("[%.4fs]", (Time.now - session_attributes['start_time']))
+    @log.debug "#{action}: #{session_attributes['protocol_state']} #{session_attributes['sender']} -> #{session_attributes['recipient']} - #{time_spent}"
     puts "action=#{action}\n\n"
     STDOUT.flush  # Ensure response is sent immediately
   end
