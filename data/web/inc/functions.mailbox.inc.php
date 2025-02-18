@@ -2350,7 +2350,6 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
               $private_comment = (isset($_data['private_comment'])) ? $_data['private_comment'] : $is_now['private_comment'];
               $policy_rule = (isset($_data['policy_rule'])) ? $_data['policy_rule'] : $is_now['policy_rule'];
               $moderators =  (isset($_data['moderators'])) ? $_data['moderators'] : $is_now['moderators'];
-              $policy_rule = (isset($_data['policy_rule'])) ? $_data['policy_rule'] : $is_now['policy_rule'];
               $policy_active = (isset($_data['policy_active'])) ? intval($_data['policy_active']) : $is_now['policy_active'];
               $goto = (!empty($_data['goto'])) ? $_data['goto'] : $is_now['goto'];
               $address = (!empty($_data['address'])) ? $_data['address'] : $is_now['address'];
