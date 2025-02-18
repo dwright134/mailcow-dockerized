@@ -723,11 +723,11 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
           }
           foreach ($policy_moderators as $i => &$policy_moderator) {
             if (empty($policy_moderator)) {
-              unset($policy_moderator[$i]);
+              unset($policy_moderators[$i]);
               continue;
             }
             if (!filter_var($policy_moderator, FILTER_VALIDATE_EMAIL) === true) {
-              unset($policy_moderator[$i]);
+              unset($policy_moderators[$i]);
               continue;
             }
           }
