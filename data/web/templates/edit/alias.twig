@@ -43,7 +43,6 @@
     <label class="control-label col-sm-2" for="policy_rule">{{ lang.edit.policy_rule }}</label>
     <div class="col-sm-10">
       <select name="policy" class="form-control">
-        <option value="public"{% if result.policy_rule in ['','public'] %} selected{% endif %}Public</option>
         <option value="domain"{% if result.policy_rule == 'domain' %} selected{% endif %}>Domain</option>
         <option value="members_only"{% if result.policy_rule == 'members_only' %} selected{% endif %}>Members Only</option>
         <option value="moderators_only"{% if result.policy_rule == 'moderators_only' %} selected{% endif %}>Moderators Only</option>
