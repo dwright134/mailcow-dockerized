@@ -6,7 +6,7 @@
 <br>
 <form class="form-horizontal" data-id="editalias" role="form" method="post">
   <input type="hidden" value="0" name="active">
-  <input type="hidden" value="1" name="policy_active">
+  <input type="hidden" value="0" name="policy_active">
   {% if not skip_sogo %}
   <input type="hidden" value="0" name="sogo_visible">
   {% endif %}
@@ -52,21 +52,21 @@
     </div>
   </div>
   <div class="row mb-4">
-    <label class="control-label col-sm-2" for="moderators">{{ lang.edit.moderators }}</label>
+    <label class="control-label col-sm-2" for="policy_moderators">{{ lang.edit.policy_moderators }}</label>
     <div class="col-sm-10">
-      <input maxlength="160" class="form-control" type="text" name="moderators" value="{{ result.moderators }}" />
+      <textarea id="textarea_moderators" class="form-control mb-4" autocapitalize="none" autocorrect="off" rows="2" id="policy_moderators" name="policy_moderators">{{ result.policy_moderators|replace({',': ', '}) }}</textarea>
     </div>
   </div>
   <div class="row mb-2">
     <div class="offset-sm-2 col-sm-10">
       <div class="form-check">
-        <label><input type="checkbox" class="form-check-input" value="1" name="policy_active"{% if result.islist == '1' %} checked{% endif %}>Policy Active</label>
+        <label><input type="checkbox" class="form-check-input" value="1" name="policy_active"{% if result.policy_active == '1' %} checked{% endif %}>Policy Active</label>
       </div>
     </div>
   </div>
   <hr>
   <div class="row mb-2">
-    <label class="control-label col-sm-2" for="private_">{{ lang.edit.private_comment }}</label>
+    <label class="control-label col-sm-2" for="private_comment">{{ lang.edit.private_comment }}</label>
     <div class="col-sm-10">
       <input maxlength="160" class="form-control" type="text" name="private_comment" value="{{ result.private_comment }}" />
     </div>

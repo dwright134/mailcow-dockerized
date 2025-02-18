@@ -185,7 +185,7 @@ function init_db_schema()
           "public_comment" => "TEXT",
           "sogo_visible" => "TINYINT(1) NOT NULL DEFAULT '1'",
           "policy_rule" => "TEXT",
-          "moderators" => "TEXT",
+          "policy_moderators" => "TEXT",
           "policy_active" => "TINYINT(1) NOT NULL DEFAULT '0'",
           "active" => "TINYINT(1) NOT NULL DEFAULT '1'"
         ),

@@ -130,9 +130,9 @@ paths:
                   description: toggle visibility as selectable sender in SOGo
                   type: boolean
                 policy_rule:
-                  description: policy rule to apply to alias address. Options are domain, moderators, members, members_and_moderators.
+                  description: policy rule to apply to alias address. Options are public, domain, moderators, members, members_and_moderators.
                   type: string
-                moderators:
+                policy_moderators:
                   description: Moderators have access to send emails to alias when the proper mode is set. It is a list of email addreses, comma seperated.
                   type: string
                 policy_active:
@@ -2953,8 +2953,8 @@ paths:
                           private_comment: private comment
                           public_comment: public comment
                           policy_rule: policy_rule
-                          moderators: moderator@domain.ltd
-                          policy_active: "0"
+                          policy_moderators: moderator@domain.ltd,moderators@domain2.ltd
+                          policy_active: "1"
                         - null
                       msg:
                         - alias_modified
@@ -2995,7 +2995,10 @@ paths:
                   goto: destination@domain.tld
                   private_comment: private comment
                   public_comment: public comment
-                items: ["6"]
+                  policy_rule: policy rule
+                  policy_moderators: moderator list
+                  policy_active: "1"
+                items: ["10"]
               properties:
                 attr:
                   properties:
@@ -3025,9 +3028,9 @@ paths:
                       description: toggle visibility as selectable sender in SOGo
                       type: boolean
                     policy_rule:
-                      description: policy rule to apply to alias address. Options are domain, moderators, members, members_and_moderators.
+                      description: policy rule to apply to alias address. Options are public, domain, moderators, members, members_and_moderators.
                       type: string
-                    moderators:
+                    policy_moderators:
                       description: Moderators have access to send emails to alias when the proper mode is set. It is a list of email addreses, comma seperated.
                       type: string
                     policy_active:
@@ -3989,6 +3992,9 @@ paths:
                       modified: null
                       private_comment: null
                       public_comment: null
+                      policy_rule: null
+                      policy_moderators: null
+                      policy_active: "1"
                     - active: "1"
                       address: "@domain.tld"
                       created: "2019-04-27 13:42:39"
@@ -4000,6 +4006,9 @@ paths:
                       modified: null
                       private_comment: null
                       public_comment: null
+                      policy_rule: null
+                      policy_moderators: null
+                      policy_active "1"
           description: OK
           headers: {}
       tags:

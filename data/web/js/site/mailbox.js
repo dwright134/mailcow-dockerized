@@ -1952,9 +1952,9 @@ jQuery(function($){
           defaultContent: 'Policy Rule'
         },
         {
-          title: lang.moderators,
-          data: 'moderators',
-          defaultContent: 'Moderators'
+          title: lang.policy_moderators,
+          data: 'policy_moderators',
+          defaultContent: 'Policy Moderators'
         },
         {
           title: lang.policy_active,

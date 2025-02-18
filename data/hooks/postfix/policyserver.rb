@@ -41,7 +41,7 @@ class AliasPolicyServer
 
   def alias_policy(session_attributes)
     query = <<~SQL
-      SELECT a.address, a.goto, a.private_comment AS policy, a.public_comment AS moderators
+      SELECT a.address, a.goto, a.policy_rule, a.policy_moderators
       FROM alias a
       INNER JOIN domain d ON a.domain = d.domain AND d.active = 1
       WHERE a.active = 1 AND islist = 1 AND address = ? LIMIT 1
@@ -49,16 +49,16 @@ class AliasPolicyServer
     results = db_fetch(query, [session_attributes['recipient']])
     return "DUNNO No alias record for #{session_attributes['recipient']} found." if results.empty?
 
-    @policy = results[0]['policy'].downcase
+    @policy = results[0]['policy_rule'].downcase
     sender = session_attributes['sender']
     sender_domain = sender.split('@').last
     recipient = session_attributes['recipient']
     recipient_domain = recipient.split('@').last
     goto = results[0]['goto'].split(',')
-    moderators = results[0]['moderators'].split(',').map(&:strip)
+    moderators = results[0]['policy_moderators'].split(',').map(&:strip)
 
     case @policy
-      when 'no_reply' "REJECT,INFO" 
+      when 'public' "OK" 
       when 'domain' then sender_domain == recipient_domain ? "OK" : "REJECT"
       when 'members_only' then goto.include?(sender) ? "OK" : "REJECT"
       when 'moderators_only' then moderators.include?(sender) ? "OK" : "REJECT"
