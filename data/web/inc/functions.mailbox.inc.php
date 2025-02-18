@@ -1185,7 +1185,11 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
           if (password_check($password, $password2) !== true) {
             return false;
           }
-          $password_hashed = hash_password($password);
+          if (preg_match('/^{SSHA256}|{SHA512-CRYPT}|{SSHA512}|{MD5-CRYPT}|$1$|{SSHA}|{PLAIN-MD5}/i', $password)) {
+            $password_hashed = $password;
+          } else {
+            $password_hashed = hash_password($password);
+          }
           if ($MailboxData['count'] >= $DomainData['mailboxes']) {
             $_SESSION['return'][] = array(
               'type' => 'danger',

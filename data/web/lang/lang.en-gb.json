@@ -697,7 +697,7 @@
         "sogo_visible_info": "This option only affects objects, that can be displayed in SOGo (shared or non-shared alias addresses pointing to at least one local mailbox). If hidden, an alias will not appear as selectable sender in SOGo.",
         "policy_rule": "ACL rule applied to Email Alias. Only applies if Policy is active.",
         "policy_rule_info": "This option only affects email aliases when the policy is active.",
-        "policy_moderators": "Comma separated list of moderator email addresses for the alias policy ACL.",
+        "policy_moderators": "Comma separated list of policy moderator email addresses for the alias policy ACL.",
         "policy_active": "Email alias policy is active.",
         "spam_alias": "Create or change time limited alias addresses",
         "spam_filter": "Spam filter",
