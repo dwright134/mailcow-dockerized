@@ -4387,7 +4387,7 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
             `sogo_visible`,
             `policy_rule`,
             `policy_moderators`,
-            `policy_active`
+            `policy_active`,
             `created`,
             `modified`
               FROM `alias`
