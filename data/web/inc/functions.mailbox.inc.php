@@ -718,6 +718,9 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
             );
             return false;
           }
+          if ($policy_rule == '') {
+            $policy_rule = 'public';
+          }
           if ($goto_null == "1") {
             $goto = "null@localhost";
           }
