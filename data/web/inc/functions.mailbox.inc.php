@@ -4423,6 +4423,7 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
           $aliasdata['policy_rule'] = $row['policy_rule'];
           $aliasdata['policy_moderators'] = $row['policy_moderators'];
           $aliasdata['policy_active'] = $row['policy_active'];
+          $aliasdata['policy_active_int'] = $row['policy_active'];
           $aliasdata['created'] = $row['created'];
           $aliasdata['modified'] = $row['modified'];
           if (!hasDomainAccess($_SESSION['mailcow_cc_username'], $_SESSION['mailcow_cc_role'], $aliasdata['domain'])) {
