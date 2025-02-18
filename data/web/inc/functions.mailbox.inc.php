@@ -2564,8 +2564,8 @@ function mailbox($_action, $_type, $_data = null, $_extra = null) {
                 `goto` = :goto,
                 `sogo_visible`= :sogo_visible,
                 `policy_rule` = :policy_rule,
-                `policy_moderators` => :policy_moderators,
-                `policy_active` => :policy_active,
+                `policy_moderators` = :policy_moderators,
+                `policy_active` = :policy_active,
                 `active`= :active
                   WHERE `id` = :id");
               $stmt->execute(array(
